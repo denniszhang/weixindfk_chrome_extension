@@ -1,0 +1,41 @@
+/*
+ * Copyright 2017 zn. All rights reserved.
+ * QQ:1490169
+ * 
+ * manifest
+ * Version: 1.0
+ */
+{
+  "manifest_version": 2,
+  "version": "1.1.0",
+  "name": "微信多客服用户信息助手",
+  "description": "可以对接公司内部的信息平台，CRM等，方便客服与用户沟通时，查看用户信息，提高效率",
+  "browser_action": {
+    "default_icon": "/image/1.png",
+    "default_popup": "popup.html",  //帮助及参数设置，如果公司内部接口有加密／校验机制可以这里设置。
+    "default_title": "客服验证码录入"
+  },
+  "permissions": [
+    "https://mpkf.weixin.qq.com/cgi-bin/*", //微信多客服的地址，通配符handle获得的事件。不用改
+    "http://*.yourCompanyLinkHere.cn/*",  //需要发请求的URL，可以是公司内部接口或CRM接口。有需要的，改
+    "webRequest",
+    "webRequestBlocking",
+    "debugger"
+  ],
+  "externally_connectable": {
+    "matches": ["https://mpkf.weixin.qq.com/*"]
+  },
+  "background": {
+  	"scripts": ["background.js"],
+  	"persistent": true
+  },
+    "content_scripts": [
+    {
+      "matches": ["https://mpkf.weixin.qq.com/cgi-bin/*"],
+      "js": [ "/out/jquery.js","/out/jquery.alerts.js","content.js"],//顺序的要求！！
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ]
+
+}
